@@ -3,21 +3,21 @@ import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from "../lib/supabase"
 
 interface AuthContextType {
-    user: User | null
+    User: User | null
     session: Session | null
     loading: boolean
     signOut: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType >({
-    user: null,
+    User: null,
     session: null,
     loading: true,
     signOut: async () => {}
 })
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null)
+    const [User, setUser] = useState<User | null>(null)
     const [session, setSession] = useState<Session | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
 
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, session, loading, signOut }}>
+        <AuthContext.Provider value={{ User, session, loading, signOut }}>
             {children}
         </AuthContext.Provider>
     )

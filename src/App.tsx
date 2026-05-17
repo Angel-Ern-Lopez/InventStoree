@@ -1,27 +1,44 @@
 
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
-import Login from './pages/login'
+import Login from './pages/Login'
+import Layout from './components/layout'
+import Dashboard from './pages/Dashboard'
+import Products from './pages/Products'
+import Settings from './pages/settings'
 
-const AppContent = () => {
-  const { user, loading } = useAuth()
+
+const AppRoutes = () => {
+  const { User, loading } = useAuth()
 
   if (loading) return <p>Loading...</p>
-  if (!user) return <Login />
+  if (!User) return <Login />
 
   return (
-    <div>
-      <h1>Inventory App</h1>
-      {/* Dashboard will go here */}
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+      </Route>
+    </Routes>
   )
-
 }
 
 const App = () => {
 	return (
-		<AuthProvider>
-			<AppContent />
-		</AuthProvider>
+		<BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<AppRoutes />} />
+          <Route element={<AppRoutes />} />
+        </Routes>
+      </AuthProvider>
+
+    </BrowserRouter>
 	)
 }
 
