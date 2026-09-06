@@ -12,18 +12,30 @@ const Sidebar = () => {
   }
 
   return (
-    <aside>
-        <div>
-            <h1>InvenStoree</h1>
-        </div>
+    <aside className="sidebar">
+      <div className="sidebar-brand">
+        <span className="brand-mark" aria-hidden="true">IS</span>
+        <span>InvenStoree</span>
+      </div>
 
-        <nav>
-            <NavLink to="/dashboard">Dashboard</NavLink>
-            <NavLink to="/products">Products</NavLink>
-            <NavLink to="/settings">Settings</NavLink>
-        </nav>
+      <nav className="sidebar-nav" aria-label="Primary navigation">
+        <NavLink className="sidebar-link" to="/dashboard">
+          <span className="sidebar-icon" aria-hidden="true">⌂</span>
+          <span>Dashboard</span>
+        </NavLink>
+        <NavLink className="sidebar-link" to="/products">
+          <span className="sidebar-icon" aria-hidden="true">▦</span>
+          <span>Products</span>
+        </NavLink>
+      </nav>
 
-        <button onClick={handleLogout}>Sign out</button>
+      <div className="sidebar-footer">
+        <NavLink className="sidebar-link" to="/settings" aria-label="Settings">
+          <span className="sidebar-icon settings-icon" aria-hidden="true">⚙</span>
+          <span>Settings</span>
+        </NavLink>
+        <button className="sidebar-signout" onClick={handleLogout}>Sign out</button>
+      </div>
     </aside>
   )
 }

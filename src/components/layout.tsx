@@ -3,9 +3,9 @@ import Sidebar from "./sidebar";
 
 const Layout = () => {
     return (
-        <div style={{ display: 'flex', height: '100vh' }}>
+        <div className="app-shell">
             <Sidebar />
-            <main   style={{ flex: 1, overflow: 'auto' }}>
+            <main className="app-main">
                 <Outlet />
             </main>
         </div>

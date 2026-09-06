@@ -51,19 +51,251 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 100%;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+}
+
 body {
   margin: 0;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f8fa;
+  text-align: left;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+}
+
+.auth-page {
+  display: grid;
+  min-height: 100vh;
+  box-sizing: border-box;
+  place-items: center;
+  padding: 32px 20px;
+  background: #f7f8fa;
+  text-align: left;
+}
+
+.auth-panel {
+  width: min(100%, 430px);
+  box-sizing: border-box;
+  padding: 36px 38px 30px;
+  border: 1px solid #e6e9ee;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(24, 34, 48, 0.08);
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  color: #182230;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.auth-panel h1 {
+  margin: 0 0 7px;
+  color: #182230;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+  margin-bottom: 26px;
+  color: #697386;
+  font-size: 14px;
+}
+
+.auth-panel .supabase-auth-ui_ui-container {
+  width: 100%;
+}
+
+.auth-panel .supabase-auth-ui_ui-button {
+  min-height: 44px;
+  font-weight: 600;
+}
+
+.auth-panel .supabase-auth-ui_ui-input {
+  min-height: 44px;
+  box-sizing: border-box;
+  color: #182230 !important;
+  background: #ffffff !important;
+  caret-color: #000000;
+  -webkit-text-fill-color: #182230;
+}
+
+.auth-panel .supabase-auth-ui_ui-input::placeholder {
+  color: #8993a3;
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 18px 12px;
+  }
+
+  .auth-panel {
+    padding: 28px 22px 22px;
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex: 0 0 232px;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 28px 16px 18px;
+  color: #697386;
+  background: #ffffff;
+  border-right: 1px solid #e6e9ee;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 12px 38px;
+  color: #182230;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 9px;
+  color: #ffffff;
+  background: #315efb;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 6px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 13px;
+  border-radius: 8px;
+  color: #697386;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.sidebar-link:hover {
+  color: #182230;
+  background: #f2f5fa;
+}
+
+.sidebar-link.active {
+  color: #2448cf;
+  background: #edf2ff;
+}
+
+.sidebar-icon {
+  display: grid;
+  width: 20px;
+  place-items: center;
+  color: currentColor;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.settings-icon {
+  font-size: 18px;
+}
+
+.sidebar-footer {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.sidebar-signout {
+  min-height: 40px;
+  margin: 2px 8px 0;
+  border: 1px solid #e6e9ee;
+  border-radius: 7px;
+  color: #697386;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.sidebar-signout:hover {
+  border-color: #c9d1df;
+  color: #182230;
+  background: #f7f8fa;
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    flex-basis: 72px;
+    align-items: center;
+    padding: 20px 10px 14px;
+  }
+
+  .sidebar-brand {
+    padding: 0 0 30px;
+  }
+
+  .sidebar-brand > span:last-child,
+  .sidebar-link > span:last-child,
+  .sidebar-signout {
+    display: none;
+  }
+
+  .sidebar-link {
+    justify-content: center;
+    width: 48px;
+    padding: 0;
+  }
+
+  .sidebar-footer {
+    align-items: center;
+  }
+
+  .sidebar-icon {
+    width: 24px;
+  }
 }
 
 h1,

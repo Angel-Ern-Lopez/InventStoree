@@ -5,23 +5,26 @@ import Login from './pages/Login'
 import Layout from './components/layout'
 import Dashboard from './pages/Dashboard'
 import Products from './pages/Products'
-import Settings from './pages/settings'
+import Settings from './pages/Settings'
 
 
 const AppRoutes = () => {
   const { User, loading } = useAuth()
 
   if (loading) return <p>Loading...</p>
-  if (!User) return <Login />
 
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route
+        path="/login"
+        element={User ? <Navigate to="/dashboard" replace /> : <Login />}
+      />
+      <Route element={User ? <Layout /> : <Navigate to="/login" replace />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products" element={<Products />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="*" element={<Navigate to="/dashboard" />} />
       </Route>
+      <Route path="*" element={<Navigate to={User ? "/dashboard" : "/login"} replace />} />
     </Routes>
   )
 }
@@ -30,12 +33,7 @@ const App = () => {
 	return (
 		<BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="*" element={<AppRoutes />} />
-          <Route element={<AppRoutes />} />
-        </Routes>
+        <AppRoutes />
       </AuthProvider>
 
     </BrowserRouter>
