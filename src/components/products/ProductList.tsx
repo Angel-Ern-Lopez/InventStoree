@@ -1,5 +1,6 @@
-import type { Product } from '../../types/product'
+import type { Category, Product } from '../../types/product'
 import QuantityAdjuster from './QuantityAdjuster'
+import ProductFilters from './ProductFilters'
 
 type ProductListProps = {
     products: Product[]
@@ -12,6 +13,13 @@ type ProductListProps = {
     onRequestDelete: (productId: string) => void
     onCancelDelete: () => void
     onDelete: (product: Product) => void
+    searchTerm: string
+    categoryId: string
+    lowStockOnly: boolean
+    categories: Category[]
+    onSearchChange: (value: string) => void
+    onCategoryChange: (value: string) => void
+    onLowStockChange: (value: boolean) => void
 }
 
 const ProductList = ({
@@ -25,6 +33,13 @@ const ProductList = ({
     onRequestDelete,
     onCancelDelete,
     onDelete,
+    searchTerm,
+    categoryId,
+    lowStockOnly,
+    categories,
+    onSearchChange,
+    onCategoryChange,
+    onLowStockChange,
 }: ProductListProps) => {
     return (
         <section className="product-list-panel" aria-labelledby="product-list-heading">
@@ -35,6 +50,17 @@ const ProductList = ({
                 </div>
                 <span className="product-count">{products.length}</span>
             </div>
+
+            <ProductFilters
+                searchTerm={searchTerm}
+                categoryId={categoryId}
+                lowStockOnly={lowStockOnly}
+                categories={categories}
+                resultCount={products.length}
+                onSearchChange={onSearchChange}
+                onCategoryChange={onCategoryChange}
+                onLowStockChange={onLowStockChange}
+            />
 
             {loading && <p className="empty-state">Loading products...</p>}
             {!loading && loadError && <p className="empty-state error-message">Unable to load products.</p>}
@@ -52,6 +78,7 @@ const ProductList = ({
                             <div>
                                 <h3>{product.name}</h3>
                                 <p>{product.sku || 'No SKU assigned'}</p>
+                                {product.category_name && <span className="product-category">{product.category_name}</span>}
                             </div>
                             <div className="product-stock">
                                 <strong>{product.quantity}</strong>

@@ -24,6 +24,32 @@ CREATE POLICY "Users can only see their own categories"
 ON categories FOR ALL
 USING (auth.uid() = user_id);
 
+-- Category ownership and table privileges for the authenticated app role.
+ALTER TABLE public.categories
+  ALTER COLUMN user_id SET DEFAULT auth.uid();
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON public.categories
+TO authenticated;
+
+DROP POLICY IF EXISTS "Users can create their own categories"
+ON public.categories;
+
+CREATE POLICY "Users can create their own categories"
+ON public.categories
+FOR INSERT
+TO authenticated
+WITH CHECK (user_id = auth.uid());
+
+DROP POLICY IF EXISTS "Users can view their own categories"
+ON public.categories;
+
+CREATE POLICY "Users can view their own categories"
+ON public.categories
+FOR SELECT
+TO authenticated
+USING (user_id = auth.uid());
+
 CREATE POLICY "Users can only see their own products"
 ON products FOR ALL
 USING (auth.uid() = user_id);

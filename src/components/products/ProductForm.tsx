@@ -1,5 +1,6 @@
 import type { ChangeEvent, FormEvent } from 'react'
-import type { ProductFormValues } from '../../types/product'
+import type { Category, ProductFormValues } from '../../types/product'
+import CategorySelect from './CategorySelect'
 
 type ProductFormProps = {
     values: ProductFormValues
@@ -7,6 +8,8 @@ type ProductFormProps = {
     saving: boolean
     errorMessage: string
     successMessage: string
+    categories: Category[]
+    onCreateCategory: (name: string) => Promise<Category>
     onChange: (field: keyof ProductFormValues, value: string) => void
     onSubmit: (event: FormEvent<HTMLFormElement>) => void
     onCancel: () => void
@@ -18,6 +21,8 @@ const ProductForm = ({
     saving,
     errorMessage,
     successMessage,
+    categories,
+    onCreateCategory,
     onChange,
     onSubmit,
     onCancel,
@@ -51,6 +56,17 @@ const ProductForm = ({
                         value={values.sku}
                         onChange={handleChange('sku')}
                         placeholder="e.g. KEY-001"
+                    />
+                </label>
+
+                <label>
+                    Category <span className="optional-label">Optional</span>
+                    <CategorySelect
+                        value={values.categoryId}
+                        categories={categories}
+                        disabled={saving}
+                        onChange={(value) => onChange('categoryId', value)}
+                        onCreateCategory={onCreateCategory}
                     />
                 </label>
 
