@@ -724,6 +724,238 @@ body {
   }
 }
 
+.settings-page {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 46px clamp(24px, 5vw, 76px);
+  color: #182230;
+  text-align: left;
+}
+
+.settings-header {
+  margin-bottom: 34px;
+}
+
+.settings-header h1 {
+  margin: 0 0 8px;
+  color: #182230;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.settings-grid {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(360px, 1.18fr);
+  gap: 22px;
+  width: 100%;
+  max-width: 1120px;
+}
+
+.settings-panel {
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px solid #e6e9ee;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(24, 34, 48, 0.04);
+}
+
+.settings-panel h2 {
+  margin: 0 0 8px;
+  color: #182230;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.35px;
+}
+
+.category-settings-form {
+  display: grid;
+  gap: 17px;
+  margin-top: 26px;
+}
+
+.category-settings-form label {
+  display: grid;
+  gap: 7px;
+  color: #394557;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.category-settings-form input,
+.category-edit-control input {
+  min-height: 43px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid #d6dce6;
+  border-radius: 7px;
+  color: #182230;
+  background: #ffffff;
+  caret-color: #000000;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.category-settings-form input:focus,
+.category-edit-control input:focus {
+  border-color: #315efb;
+  box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.12);
+}
+
+.category-list-panel {
+  display: flex;
+  height: 620px;
+  max-height: 620px;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.category-settings-list {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-color: #b8c5e8 #f1f4fa;
+  scrollbar-width: thin;
+}
+
+.category-settings-list::-webkit-scrollbar {
+  width: 9px;
+}
+
+.category-settings-list::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background: #f1f4fa;
+}
+
+.category-settings-list::-webkit-scrollbar-thumb {
+  border: 2px solid #f1f4fa;
+  border-radius: 8px;
+  background: #b8c5e8;
+}
+
+.category-settings-list::-webkit-scrollbar-thumb:hover {
+  background: #8fa4df;
+}
+
+.category-search-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.category-search-field input {
+  width: 100%;
+  min-height: 36px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border: 1px solid #d6dce6;
+  border-radius: 7px;
+  color: #182230;
+  background: #ffffff;
+  caret-color: #000000;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.category-search-field input:focus {
+  border-color: #315efb;
+  box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.12);
+}
+
+.category-search-empty {
+  min-height: 150px;
+}
+
+.category-settings-row {
+  display: flex;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 0;
+  border-top: 1px solid #edf0f4;
+}
+
+.category-name {
+  min-width: 0;
+  overflow: hidden;
+  color: #182230;
+  font-size: 14px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-row-actions,
+.category-edit-control,
+.category-delete-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.category-edit-control input {
+  width: min(220px, 45vw);
+  min-height: 34px;
+  font-size: 13px;
+}
+
+.category-delete-control {
+  width: 100%;
+  justify-content: flex-start;
+  color: #697386;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.settings-global-message {
+  max-width: 1120px;
+  margin: -18px 0 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 820px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-page {
+    padding: 30px 18px;
+  }
+
+  .settings-panel {
+    padding: 22px 18px;
+  }
+
+  .category-list-panel {
+    height: 520px;
+    max-height: 520px;
+  }
+
+  .category-settings-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .category-row-actions,
+  .category-edit-control {
+    justify-content: flex-start;
+  }
+}
+
 .auth-page {
   display: grid;
   min-height: 100vh;
