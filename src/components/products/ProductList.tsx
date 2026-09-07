@@ -1,4 +1,5 @@
 import type { Product } from '../../types/product'
+import QuantityAdjuster from './QuantityAdjuster'
 
 type ProductListProps = {
     products: Product[]
@@ -6,6 +7,7 @@ type ProductListProps = {
     loadError: string
     confirmDeleteId: string | null
     deletingProductId: string | null
+    onAdjustQuantity: (productId: string, amount: number) => Promise<void>
     onEdit: (product: Product) => void
     onRequestDelete: (productId: string) => void
     onCancelDelete: () => void
@@ -18,6 +20,7 @@ const ProductList = ({
     loadError,
     confirmDeleteId,
     deletingProductId,
+    onAdjustQuantity,
     onEdit,
     onRequestDelete,
     onCancelDelete,
@@ -56,6 +59,10 @@ const ProductList = ({
                                     {product.quantity <= product.low_stock_threshold ? 'Low stock' : 'In stock'}
                                 </span>
                             </div>
+                            <QuantityAdjuster
+                                onAdjust={(amount) => onAdjustQuantity(product.id, amount)}
+                                disabled={deletingProductId === product.id}
+                            />
                             <div className="product-actions">
                                 {confirmDeleteId === product.id ? (
                                     <>

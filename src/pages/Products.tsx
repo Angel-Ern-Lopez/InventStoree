@@ -150,6 +150,25 @@ const Products = () => {
         setConfirmDeleteId(null)
     }
 
+    const handleAdjustQuantity = async (productId: string, amount: number) => {
+        const { data, error } = await supabase.rpc('adjust_product_quantity', {
+            product_id: productId,
+            adjustment_amount: amount,
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        if (!data) {
+            throw new Error('The quantity was not updated.')
+        }
+
+        setProducts((currentProducts) => currentProducts.map((product) => (
+            product.id === productId ? data as Product : product
+        )))
+    }
+
     return (
         <div className="products-page">
             <header className="products-header">
@@ -175,6 +194,7 @@ const Products = () => {
                     loadError={loadError}
                     confirmDeleteId={confirmDeleteId}
                     deletingProductId={deletingProductId}
+                    onAdjustQuantity={handleAdjustQuantity}
                     onEdit={startEditing}
                     onRequestDelete={setConfirmDeleteId}
                     onCancelDelete={() => setConfirmDeleteId(null)}

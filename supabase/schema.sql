@@ -27,3 +27,36 @@ USING (auth.uid() = user_id);
 CREATE POLICY "Users can only see their own products"
 ON products FOR ALL
 USING (auth.uid() = user_id);
+
+-- Atomic inventory adjustment for the authenticated product owner.
+CREATE OR REPLACE FUNCTION public.adjust_product_quantity(
+  product_id uuid,
+  adjustment_amount integer
+)
+RETURNS public.products
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = public
+AS $$
+DECLARE
+  updated_product public.products;
+BEGIN
+  UPDATE public.products
+  SET
+    quantity = quantity + adjustment_amount,
+    updated_at = now()
+  WHERE id = product_id
+    AND user_id = auth.uid()
+    AND quantity + adjustment_amount >= 0
+  RETURNING * INTO updated_product;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Product not found or quantity adjustment would make inventory negative';
+  END IF;
+
+  RETURN updated_product;
+END;
+$$;
+
+REVOKE EXECUTE ON FUNCTION public.adjust_product_quantity(uuid, integer) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.adjust_product_quantity(uuid, integer) TO authenticated;
