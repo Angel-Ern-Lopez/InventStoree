@@ -37,6 +37,7 @@ const CategoryForm = ({ saving, errorMessage, successMessage, onCreate }: Catego
                     Category name
                     <input
                         required
+                        maxLength={80}
                         value={name}
                         onChange={(event) => setName(event.target.value)}
                         placeholder="e.g. Tech Products"

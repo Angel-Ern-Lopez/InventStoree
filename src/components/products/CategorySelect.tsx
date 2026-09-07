@@ -54,6 +54,7 @@ const CategorySelect = ({
             <div className="category-create-control">
                 <div className="category-create-row">
                     <input
+                        maxLength={80}
                         value={categoryName}
                         onChange={(event) => setCategoryName(event.target.value)}
                         placeholder="e.g. Tech Products"

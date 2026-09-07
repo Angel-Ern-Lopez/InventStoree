@@ -98,6 +98,7 @@ const CategoryList = ({
                             {editingId === category.id ? (
                                 <div className="category-edit-control">
                                     <input
+                                        maxLength={80}
                                         value={editingName}
                                         onChange={(event) => setEditingName(event.target.value)}
                                         aria-label={`Rename ${category.name}`}

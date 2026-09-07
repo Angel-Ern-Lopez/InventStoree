@@ -86,3 +86,24 @@ $$;
 
 REVOKE EXECUTE ON FUNCTION public.adjust_product_quantity(uuid, integer) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.adjust_product_quantity(uuid, integer) TO authenticated;
+
+-- Basic database-side bounds; client-side maxLength is not a security boundary.
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'products_name_length') THEN
+    ALTER TABLE public.products ADD CONSTRAINT products_name_length CHECK (char_length(name) BETWEEN 1 AND 200);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'products_sku_length') THEN
+    ALTER TABLE public.products ADD CONSTRAINT products_sku_length CHECK (sku IS NULL OR char_length(sku) BETWEEN 1 AND 100);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'products_quantity_nonnegative') THEN
+    ALTER TABLE public.products ADD CONSTRAINT products_quantity_nonnegative CHECK (quantity >= 0);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'products_threshold_nonnegative') THEN
+    ALTER TABLE public.products ADD CONSTRAINT products_threshold_nonnegative CHECK (low_stock_threshold >= 0);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'categories_name_length') THEN
+    ALTER TABLE public.categories ADD CONSTRAINT categories_name_length CHECK (char_length(name) BETWEEN 1 AND 80);
+  END IF;
+END;
+$$;

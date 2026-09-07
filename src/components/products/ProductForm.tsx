@@ -44,6 +44,7 @@ const ProductForm = ({
                     Product name
                     <input
                         required
+                        maxLength={200}
                         value={values.name}
                         onChange={handleChange('name')}
                         placeholder="e.g. Wireless keyboard"
@@ -53,6 +54,7 @@ const ProductForm = ({
                 <label>
                     SKU <span className="optional-label">Optional</span>
                     <input
+                        maxLength={100}
                         value={values.sku}
                         onChange={handleChange('sku')}
                         placeholder="e.g. KEY-001"
